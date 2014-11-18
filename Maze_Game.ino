@@ -35,6 +35,14 @@
 // global variables go here
 int xcoord = 3;
 int ycoord = 4;
+void GreenWall()
+{
+  DrawPx(4,3,Green); DrawPx(4,4,Green); DrawPx(4,5,Green); 
+}  
+
+// consider making code that randomly generates obstacles
+// enemies should move when you move
+// yellow lights at top could keep track of time, score, etc
 
 void setup()                    // run once, when the sketch starts
 {
@@ -43,7 +51,7 @@ void setup()                    // run once, when the sketch starts
 
 void loop()                     // run over and over again
 {
-  CheckButtonsPress();
+  CheckButtonsDown();
   if (Button_Right)
   {
     if (xcoord < 7)
@@ -56,23 +64,24 @@ void loop()                     // run over and over again
     if (xcoord > 0)
       xcoord = xcoord - 1;
     else
-      xcoord = 0;      
+      xcoord = 7;      
   }    
     if (Button_Up)
   {
     if (ycoord < 7)
       ycoord = ycoord + 1;
     else
-      Tone_Start (500,100);     
+      Tone_Start (ToneC3,100);     
   }    
   if (Button_Down)
   {
     if (ycoord > 0)
       ycoord = ycoord - 1;
     else
-      Tone_Start (500,100);      
+      Tone_Start (ToneC3,100);      
   } 
   DrawPx(xcoord,ycoord,Red); // draw dot
+  GreenWall();
   DisplaySlate();
     delay(150);
   ClearSlate();
