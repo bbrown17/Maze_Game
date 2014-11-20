@@ -40,9 +40,7 @@ void GreenWall()
   DrawPx(4,3,Green); DrawPx(4,4,Green); DrawPx(4,5,Green); 
 }  
 
-// consider making code that randomly generates obstacles
-// enemies should move when you move
-// yellow lights at top could keep track of time, score, etc
+// see notes at /Arduino/notes.txt 
 
 void setup()                    // run once, when the sketch starts
 {
@@ -51,7 +49,7 @@ void setup()                    // run once, when the sketch starts
 
 void loop()                     // run over and over again
 {
-  GreenWall();
+  GreenWall(); // must be at top of loop so everything else isn't under it
   shift();
   DrawPx(xcoord,ycoord,Red); // draw dot
   DisplaySlate();
@@ -61,27 +59,31 @@ void loop()                     // run over and over again
 
 void shift()
 {
-  CheckButtonsPress();
+  CheckButtonsDown();
   if (Button_Right)
   {
     if (xcoord < 7)
       xcoord = xcoord + 1; // indented because belongs to inner if statement; could also say xcoord++
-    else
-      xcoord = 0;  
+        if (ReadPx(xcoord, ycoord) == Green)
+          xcoord = xcoord -1; // as soon as user lands on green pixel, go +1 pixels to original position
+    if (xcoord == 7)
+      Tone_Start (ToneC3,100); 
   }    
   if (Button_Left)
   {
     if (xcoord > 0)
       xcoord = xcoord - 1;
-    else
-      xcoord = 7;      
+        if (ReadPx(xcoord, ycoord) == Green)
+          xcoord = xcoord +1;
+    if (xcoord == 0)
+      Tone_Start (ToneC3,100);  
   }    
     if (Button_Up)
   {
     if (ycoord < 7)
       ycoord = ycoord + 1;
       if (ReadPx(xcoord, ycoord) == Green)
-        ycoord = ycoord -1; 
+        ycoord = ycoord -1; // as soon as user lands on green pixel, go -1 pixels to original position
     if (ycoord == 7)
       Tone_Start (ToneC3,100);     
   }    
@@ -89,7 +91,9 @@ void shift()
   {
     if (ycoord > 0)
       ycoord = ycoord - 1;
-    else
+        if (ReadPx(xcoord, ycoord) == Green)
+          ycoord = ycoord +1;
+    if (ycoord == 0)
       Tone_Start (ToneC3,100);      
   } 
 }
