@@ -51,7 +51,17 @@ void setup()                    // run once, when the sketch starts
 
 void loop()                     // run over and over again
 {
-  CheckButtonsDown();
+  GreenWall();
+  shift();
+  DrawPx(xcoord,ycoord,Red); // draw dot
+  DisplaySlate();
+  delay(150);
+  ClearSlate();
+}
+
+void shift()
+{
+  CheckButtonsPress();
   if (Button_Right)
   {
     if (xcoord < 7)
@@ -70,7 +80,9 @@ void loop()                     // run over and over again
   {
     if (ycoord < 7)
       ycoord = ycoord + 1;
-    else
+      if (ReadPx(xcoord, ycoord) == Green)
+        ycoord = ycoord -1; 
+    if (ycoord == 7)
       Tone_Start (ToneC3,100);     
   }    
   if (Button_Down)
@@ -80,9 +92,5 @@ void loop()                     // run over and over again
     else
       Tone_Start (ToneC3,100);      
   } 
-  DrawPx(xcoord,ycoord,Red); // draw dot
-  GreenWall();
-  DisplaySlate();
-    delay(150);
-  ClearSlate();
 }
+
