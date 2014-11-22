@@ -35,6 +35,7 @@
 // global variables go here
 int xcoord = 3;
 int ycoord = 4;
+int yenemy = ycoord - 1;
 void GreenWall()
 {
   DrawPx(4,3,Green); DrawPx(4,4,Green); DrawPx(4,5,Green); 
@@ -51,7 +52,8 @@ void loop()                     // run over and over again
 {
   GreenWall(); // must be at top of loop so everything else isn't under it
   shift();
-  DrawPx(xcoord,ycoord,Red); // draw dot
+  DrawPx(xcoord,yenemy,Orange);
+  DrawPx(xcoord,ycoord,Blue); // draw dot
   DisplaySlate();
   delay(150);
   ClearSlate();
@@ -85,7 +87,9 @@ void shift()
       if (ReadPx(xcoord, ycoord) == Green)
         ycoord = ycoord -1; // as soon as user lands on green pixel, go -1 pixels to original position
     if (ycoord == 7)
-      Tone_Start (ToneC3,100);     
+      Tone_Start (ToneC3,100); 
+    if (yenemy < 7) // enemy moves up 1 on button up
+    yenemy = yenemy + 1;     
   }    
   if (Button_Down)
   {
@@ -94,7 +98,9 @@ void shift()
         if (ReadPx(xcoord, ycoord) == Green)
           ycoord = ycoord +1;
     if (ycoord == 0)
-      Tone_Start (ToneC3,100);      
+      Tone_Start (ToneC3,100);
+    if (yenemy > 0) // enemy moves up 1 on button up
+    yenemy = yenemy - 1;       
   } 
 }
 
