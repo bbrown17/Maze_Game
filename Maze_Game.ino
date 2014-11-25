@@ -168,7 +168,7 @@ void shift()
       if (ReadPx(xcoord, yenemy) == Green)
         yenemy = yenemy -1; //
     if (yenemy == 7)
-      yenemy = 6; // prevents enemy from going off screen  
+      yenemy = ycoord -1; // prevents enemy from going off screen  
   }    
   if (Button_Down)
   {
@@ -183,7 +183,7 @@ void shift()
         if (ReadPx(xcoord, yenemy) == Green)
           yenemy = yenemy +1; //
     if (yenemy == 0)
-      yenemy = 1; // prevents enemy from going off screen   
+      yenemy = ycoord + 1; // prevents enemy from going off screen   
   } 
 
   
