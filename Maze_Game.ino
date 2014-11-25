@@ -33,8 +33,8 @@
 #include <MeggyJrSimple.h>    // Required code, line 1 of 2.
 
 // global variables go here
-int xcoord = 3;
-int ycoord = 4;
+int xcoord = 0;
+int ycoord = 7;
 int yenemy = ycoord - 1;
 void GreenWall()
 {
@@ -59,18 +59,77 @@ void setup()                    // run once, when the sketch starts
   MeggyJrSimpleSetup();      // Required code, line 2 of 2.
 }
 
+
+void gameWon()
+{
+    Tone_Start(ToneG4,100); delay(150); // plays win music
+    Tone_Start(ToneC5,100); delay(150);
+    Tone_Start(ToneE5,100); delay(150);
+    Tone_Start(ToneG4,100); delay(150);
+    Tone_Start(ToneC5,100); delay(150);
+    Tone_Start(ToneE5,100); delay(150);
+    Tone_Start(ToneG4,100); delay(150);
+    Tone_Start(ToneC5,100); delay(150);
+    Tone_Start(ToneE5,100); delay(150);
+    Tone_Start(ToneA5,250); delay(350);
+    Tone_Start(ToneG5,100); delay(150);
+    Tone_Start(ToneA5,100); delay(150);
+    Tone_Start(ToneG5,100); delay(150);
+    Tone_Start(ToneA5,100); delay(150);
+    Tone_Start(ToneG5,250); delay(650);
+    Tone_Start(ToneC6,500); delay(1000);  
+  
+  for(int x=0;x<8;x++)
+   {
+      for(int y=0;y<8;y++)
+        {
+
+          DrawPx(x,y,Green);
+          DisplaySlate();
+           
+        }  
+   }
+}
+
+void gameLost()
+{  
+  for(int x=0;x<8;x++)
+   {
+      for(int y=0;y<8;y++)
+        {
+
+          DrawPx(x,y,Red);
+          DisplaySlate();
+           
+        }  
+   }
+   
+   Tone_Start(ToneGs4, 100); delay(150); // plays loss music
+   Tone_Start(ToneC5, 100); delay(150);
+   Tone_Start(ToneE5, 100); delay(150);
+   Tone_Start(ToneGs4, 100); delay(150);
+   Tone_Start(ToneC5, 100); delay(150);
+   Tone_Start(ToneE5, 100); delay(150);
+   Tone_Start(ToneGs4, 100); delay(150);
+   Tone_Start(ToneC5, 100); delay(150);
+   Tone_Start(ToneE5, 100); delay(150);
+   Tone_Start(ToneGs4, 100); delay(300);
+   Tone_Start(ToneG4, 500); delay(750); 
+}
+
 void loop()                     // run over and over again
 {
   GreenWall(); // must be at top of loop so everything else isn't under it
-  WinZone();
   DeathZone();
+  WinZone();
   shift();
-  DrawPx(xcoord,yenemy,Red);
+  DrawPx(xcoord,yenemy,White); // draw enemy
   DrawPx(xcoord,ycoord,Blue); // draw dot
   DisplaySlate();
   delay(150);
   ClearSlate();
 }
+
 
 void shift()
 {
@@ -123,5 +182,18 @@ void shift()
     if (yenemy == 0)
       yenemy = 1; // prevents enemy from going off screen 
   } 
+  
+
+  
+  if (ReadPx(xcoord, ycoord) == Violet) 
+  {
+    gameWon(); // if user touches WinZone, end game
+  } 
+  
+  if (ReadPx(xcoord, yenemy) == Red) 
+  {
+    gameLost(); // if user touches DeathZone, end game
+  } 
+  
 }
 
