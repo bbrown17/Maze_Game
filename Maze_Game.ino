@@ -38,7 +38,9 @@ int ycoord = 7;
 int yenemy = ycoord - 1;
 void GreenWall()
 {
-  DrawPx(4,3,Green); DrawPx(4,4,Green); DrawPx(4,5,Green); 
+  DrawPx(4,3,Green); DrawPx(4,4,Green); DrawPx(4,5,Green); // draw green wall obstacle
+  DrawPx(5,5,Green); 
+  
 }  
 
 void DeathZone()
@@ -60,8 +62,20 @@ void setup()                    // run once, when the sketch starts
 }
 
 
-void gameWon()
+void gameWon() // won the game
 {
+  
+  for(int x=0;x<8;x++)
+   {
+      for(int y=0;y<8;y++)
+        {
+
+          DrawPx(x,y,Green);
+          DisplaySlate();
+           
+        }  
+   }
+   
     Tone_Start(ToneG4,100); delay(150); // plays win music
     Tone_Start(ToneC5,100); delay(150);
     Tone_Start(ToneE5,100); delay(150);
@@ -78,20 +92,9 @@ void gameWon()
     Tone_Start(ToneA5,100); delay(150);
     Tone_Start(ToneG5,250); delay(650);
     Tone_Start(ToneC6,500); delay(1000);  
-  
-  for(int x=0;x<8;x++)
-   {
-      for(int y=0;y<8;y++)
-        {
-
-          DrawPx(x,y,Green);
-          DisplaySlate();
-           
-        }  
-   }
 }
 
-void gameLost()
+void gameLost() // lost the game
 {  
   for(int x=0;x<8;x++)
    {
@@ -123,7 +126,7 @@ void loop()                     // run over and over again
   DeathZone();
   WinZone();
   shift();
-  DrawPx(xcoord,yenemy,White); // draw enemy
+  DrawPx(xcoord,yenemy,DimRed); // draw enemy
   DrawPx(xcoord,ycoord,Blue); // draw dot
   DisplaySlate();
   delay(150);
@@ -159,13 +162,13 @@ void shift()
       if (ReadPx(xcoord, ycoord) == Green)
         ycoord = ycoord -1; // as soon as user lands on green pixel, go -1 pixels to original position
     if (ycoord == 7)
-      Tone_Start (ToneC3,100); 
+      Tone_Start (ToneC3,100); // play error sound when go off screen
     if (yenemy < 7) // enemy moves up 1 on button up
     yenemy = yenemy + 1;     
       if (ReadPx(xcoord, yenemy) == Green)
         yenemy = yenemy -1; //
     if (yenemy == 7)
-      yenemy = 6; // prevents enemy from going off screen
+      yenemy = 6; // prevents enemy from going off screen  
   }    
   if (Button_Down)
   {
@@ -174,15 +177,14 @@ void shift()
         if (ReadPx(xcoord, ycoord) == Green)
           ycoord = ycoord +1;
     if (ycoord == 0)
-      Tone_Start (ToneC3,100);
+      Tone_Start (ToneC3,100); // play error sound when go off screen
     if (yenemy > 0) // enemy moves up 1 on button up
-    yenemy = yenemy - 1;       
-      if (ReadPx(xcoord, yenemy) == Green)
-        yenemy = yenemy +1; //
+      yenemy = yenemy - 1;       
+        if (ReadPx(xcoord, yenemy) == Green)
+          yenemy = yenemy +1; //
     if (yenemy == 0)
-      yenemy = 1; // prevents enemy from going off screen 
+      yenemy = 1; // prevents enemy from going off screen   
   } 
-  
 
   
   if (ReadPx(xcoord, ycoord) == Violet) 
