@@ -41,6 +41,17 @@ void GreenWall()
   DrawPx(4,3,Green); DrawPx(4,4,Green); DrawPx(4,5,Green); 
 }  
 
+void DeathZone()
+{
+  DrawPx(2,0,Red); DrawPx(2,2,Red); DrawPx(1,1,Red); 
+  DrawPx(0,0,Red); DrawPx(0,2,Red);
+} // enemy can touch death zone, if player touches, player dies. 
+
+void WinZone()
+{
+  DrawPx(5,4,Violet);
+}  // if enemy touches WinZone, player loses. must go around
+
 // see notes at /Arduino/notes.txt 
 
 void setup()                    // run once, when the sketch starts
@@ -51,8 +62,10 @@ void setup()                    // run once, when the sketch starts
 void loop()                     // run over and over again
 {
   GreenWall(); // must be at top of loop so everything else isn't under it
+  WinZone();
+  DeathZone();
   shift();
-  DrawPx(xcoord,yenemy,Orange);
+  DrawPx(xcoord,yenemy,Red);
   DrawPx(xcoord,ycoord,Blue); // draw dot
   DisplaySlate();
   delay(150);
@@ -90,6 +103,10 @@ void shift()
       Tone_Start (ToneC3,100); 
     if (yenemy < 7) // enemy moves up 1 on button up
     yenemy = yenemy + 1;     
+      if (ReadPx(xcoord, yenemy) == Green)
+        yenemy = yenemy -1; //
+    if (yenemy == 7)
+      yenemy = 6; // prevents enemy from going off screen
   }    
   if (Button_Down)
   {
@@ -101,6 +118,10 @@ void shift()
       Tone_Start (ToneC3,100);
     if (yenemy > 0) // enemy moves up 1 on button up
     yenemy = yenemy - 1;       
+      if (ReadPx(xcoord, yenemy) == Green)
+        yenemy = yenemy +1; //
+    if (yenemy == 0)
+      yenemy = 1; // prevents enemy from going off screen 
   } 
 }
 
