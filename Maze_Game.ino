@@ -30,6 +30,13 @@
  * http://www.arduino.cc/en/Tutorial/Blink
  */
 
+/* Rules
+
+How to Win: Make the blue dot touch the violet dot
+How to Lose: Make the blue dot touch the red X, make the red dot touch the violet dot
+
+*/
+
 #include <MeggyJrSimple.h>    // Required code, line 1 of 2.
 
 // global variables go here
@@ -168,7 +175,7 @@ void shift()
       if (ReadPx(xcoord, yenemy) == Green)
         yenemy = yenemy -1; //
     if (yenemy == 7)
-      yenemy = ycoord -1; // prevents enemy from going off screen  
+      yenemy = ycoord -1; // prevents enemy from going off screen 
   }    
   if (Button_Down)
   {
@@ -192,9 +199,14 @@ void shift()
     gameWon(); // if user touches WinZone, end game
   } 
   
-  if (ReadPx(xcoord, yenemy) == Red) 
+  if (ReadPx(xcoord, ycoord) == Red) 
   {
     gameLost(); // if user touches DeathZone, end game
+  } 
+  
+  if (ReadPx(xcoord, yenemy) == Violet) 
+  {
+    gameLost(); // if enemy touches WinZone, end game
   } 
   
 }
