@@ -1,8 +1,8 @@
 /*
   Maze_Game.pde
  
-A fun maze game with a green wall obstacle and death zone to
-get around, as well as an enemy to keep track of.
+  A fun maze game with a green wall obstacle and death zone to
+  get around, as well as an enemy to keep track of.
    
 
  
