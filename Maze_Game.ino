@@ -1,8 +1,8 @@
 /*
   Maze_Game.pde
  
- Example file using the The Meggy Jr Simplified Library (MJSL)
-  from the Meggy Jr RGB library for Arduino
+A fun maze game with a green wall obstacle and death zone to
+get around, as well as an enemy to keep track of.
    
 
  
